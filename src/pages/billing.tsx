@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import { BillingsView } from 'src/sections/billing/view';
+import { BillingsView } from 'src/sections/billing/view/billing-view';
 
 // ----------------------------------------------------------------------
 
