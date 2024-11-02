@@ -1,5 +1,4 @@
-
-import { User } from '../../types/user';
+import { Billing } from '../../types/billing';
 // ----------------------------------------------------------------------
 
 export const visuallyHidden = {
@@ -53,7 +52,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: User[];
+  inputData: Billing[];
   filterName: string;
   comparator: (a: any, b: any) => number;
 };

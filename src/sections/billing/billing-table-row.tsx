@@ -12,16 +12,16 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
-import { User } from '../../types/user';
+import { Billing } from '../../types/billing';
 // ----------------------------------------------------------------------
- 
-type UserTableRowProps = {
-  row: User;
+
+type BillingTableRowProps = {
+  row: Billing;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function BillingTableRow({ row, selected, onSelectRow }: BillingTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,19 +41,16 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            <Avatar alt={row.name}  />
-            {row.name}
+            {row.user.name}
           </Box>
         </TableCell>
 
-        <TableCell>{row.mobile}</TableCell>
+        <TableCell>{row.value}</TableCell>
+        <TableCell>{row.month}</TableCell>
 
-        <TableCell>{row.role}</TableCell>
-
-       
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.paymenmtStatus !== 'paid' && 'error') || 'success'}>{row.paymenmtStatus}</Label>
         </TableCell>
 
         <TableCell align="right">

@@ -16,54 +16,55 @@ import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
 import { TableNoData } from '../table-no-data';
-import { UserTableRow } from '../user-table-row';
+import { BillingTableRow } from '../billing-table-row'
 import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
- 
-import userService from '../../../services/user';
-import { User } from '../../../types/user';
+
+import billingService from '../../../services/billing';
+import { Billing } from '../../../types/billing';
 // ----------------------------------------------------------------------
 
-export function UserView() {
+export function BillingsView() {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
-  const [users, setUsers] = useState<User[]>([]); 
-
-  const dataFiltered: User[] = applyFilter({
-    inputData: users,
+  const [data, setData] =  useState<Billing[]>([]); 
+  const dataFiltered: Billing[] = applyFilter({
+    inputData: data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
-  
+
   const notFound = !dataFiltered.length && !!filterName;
+
   useEffect(() => {
     // Fetch users on component mount
-    const loadUsers = async () => {
+    const loadReadings = async () => {
       try {
-        const userList = await userService.fetchUsers();
-        setUsers(userList);
+        const readingList = await billingService.fetchBillings();
+        setData(readingList);
       } catch (error) {
         console.error("Failed to fetch users:", error);
       }
     };
-    loadUsers();
+    loadReadings();
   }, []);
+
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          Readings
         </Typography>
         <Button
           variant="contained"
           color="inherit"
-          href="/user/add"
+          href="/billing/add"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New user
+          Add Reading
         </Button>
       </Box>
 
@@ -94,9 +95,9 @@ export function UserView() {
                 }
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'mobile', label: 'Mobile' },  
-                  { id: 'role', label: 'Role' },  
-                  { id: 'status', label: 'Status' },
+                  { id: 'lastReading', label: 'Reading' },
+                  { id: 'month', label: 'Month' },
+                  { id: 'paymentStatus', label: 'Payment Status' },
                   { id: '' },
                 ]}
               />
@@ -107,7 +108,7 @@ export function UserView() {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row) => (
-                    <UserTableRow
+                    <BillingTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
