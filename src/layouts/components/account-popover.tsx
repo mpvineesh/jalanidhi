@@ -66,7 +66,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         {...other}
       >
         <Avatar src={_myAccount.photoURL} alt={loggedUserInfo.name} sx={{ width: 1, height: 1 }}>
-          {loggedUserInfo.name.charAt(0).toUpperCase()}
+          {loggedUserInfo?.name?.charAt(0)?.toUpperCase()}
         </Avatar>
       </IconButton>
 
