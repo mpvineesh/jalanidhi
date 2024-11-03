@@ -50,7 +50,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     },
     [handleClosePopover, router]
   );
-  const loggedUserInfo = JSON.parse(authService.loggedUser()||'');
+  const loggedUserInfo = authService.loggedUser();
   return (
     <>
       <IconButton

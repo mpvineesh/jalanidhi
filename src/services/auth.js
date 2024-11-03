@@ -6,7 +6,7 @@ const BASE_URL = 'https://jalanidhi-api.onrender.com/v1';
 // Utility function to set the auth token in localStorage
 const setAuthToken = (token,user) => {
     localStorage.setItem('authToken', token);
-    localStorage.setItem('loggedUser', JSON.stringify(user));
+    localStorage.setItem('loggedUser', JSON.stringify(user)); 
 };
 
 // Login function
@@ -36,8 +36,9 @@ const logout = () => {
 // Optional: function to log out and clear token
 const loggedUser = () => {
     const userInfo = localStorage.getItem('loggedUser');
+    console.log('userInfo', userInfo)
     if(userInfo) {
-        return JSON.parse(userInfo)
+        return JSON.parse(userInfo);
     }
     return {};
 };
