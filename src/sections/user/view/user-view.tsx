@@ -8,7 +8,7 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+import { useRouter } from 'src/routes/hooks';
 import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -28,7 +28,7 @@ import { User } from '../../../types/user';
 
 export function UserView() {
   const table = useTable();
-
+  const router = useRouter();
   const [filterName, setFilterName] = useState('');
   const [users, setUsers] = useState<User[]>([]); 
 
@@ -51,6 +51,11 @@ export function UserView() {
     };
     loadUsers();
   }, []);
+
+  const navigateToAdd = () => {
+    router.push('/user/add');
+  }
+
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
@@ -61,6 +66,7 @@ export function UserView() {
           variant="contained"
           color="inherit"
           href="/user/add"
+          onClick={navigateToAdd}
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
           New user

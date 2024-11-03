@@ -14,7 +14,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-
+import { useRouter } from 'src/routes/hooks';
 import { TableNoData } from '../table-no-data';
 import { BillingTableRow } from '../billing-table-row'
 import { UserTableHead } from '../user-table-head';
@@ -28,7 +28,7 @@ import { Billing } from '../../../types/billing';
 
 export function BillingsView() {
   const table = useTable();
-
+  const router = useRouter();
   const [filterName, setFilterName] = useState('');
   const [data, setData] =  useState<Billing[]>([]); 
   const dataFiltered: Billing[] = applyFilter({
@@ -52,6 +52,10 @@ export function BillingsView() {
     loadReadings();
   }, []);
 
+  const navigateToAdd = () => {
+    router.push('/billing/add');
+  }
+
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
@@ -61,7 +65,7 @@ export function BillingsView() {
         <Button
           variant="contained"
           color="inherit"
-          href="/billing/add"
+          onClick={navigateToAdd}
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
           Add Reading

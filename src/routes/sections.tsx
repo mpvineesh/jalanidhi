@@ -46,15 +46,21 @@ export function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: (
-          <ProtectedRoute>
-              <HomePage />
-          </ProtectedRoute>
-      ), index: true },
         {
-          path: 'user', element: <UserPage />,
+          element: (
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          ), index: true
         },
-        { path: 'billing', element:  <ProtectedRoute><BillingPage /></ProtectedRoute> },
+        {
+          path: 'user', element: <ProtectedRoute><UserPage /></ProtectedRoute>,
+        },
+        {
+          path: 'billing', element: <ProtectedRoute><BillingPage /></ProtectedRoute>, children: [{
+            path: 'aad', element: <ProtectedRoute><BillingAddPage /></ProtectedRoute>,
+          },]
+        },
         { path: 'billing/add', element: <ProtectedRoute><BillingAddPage /></ProtectedRoute> },
         { path: 'user/add', element: <ProtectedRoute><UserAddPage /></ProtectedRoute> },
         { path: 'blog', element: <ProtectedRoute><BlogPage /></ProtectedRoute> },
