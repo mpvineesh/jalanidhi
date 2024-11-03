@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import { useRouter } from 'src/routes/hooks';
-
 import { Iconify } from 'src/components/iconify';
+import { useRouter } from 'src/routes/hooks';
+import { useAuth } from '../../context/AuthContext';
 import { authService } from '../../services/auth';
 
 // ----------------------------------------------------------------------
@@ -22,23 +22,24 @@ export function SignInView() {
   const [showPassword, setShowPassword] = useState(false);
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
-
-  useEffect(()=> {
+  const auth = useAuth();
+  useEffect(() => {
     localStorage.removeItem('authToken');
-  },[])
+  }, [])
   const handleSignIn = useCallback(async () => {
-    
+
     try {
       // Use authService to login
       await authService.login(mobile, mobile);
 
       // Redirect to dashboard upon successful login
+      auth.login();
       router.push('/');
     } catch (err) {
       setError('Login failed. Please check your username and password.');
     }
 
-  }, [router,mobile]);
+  }, [router, mobile, auth]);
 
   const renderForm = (
     <Box display="flex" flexDirection="column" alignItems="flex-end">
@@ -60,7 +61,7 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
-       
+
         InputLabelProps={{ shrink: true }}
         type={showPassword ? 'text' : 'password'}
         InputProps={{

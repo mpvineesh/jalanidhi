@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -7,6 +7,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
+import ProtectedRoute from './components/protected-route';
 
 // ----------------------------------------------------------------------
 
@@ -45,14 +46,18 @@ export function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <HomePage />, index: true },
+        { element: (
+          <ProtectedRoute>
+              <HomePage />
+          </ProtectedRoute>
+      ), index: true },
         {
           path: 'user', element: <UserPage />,
         },
-        { path: 'billing', element: <BillingPage /> },
-        { path: 'billing/add', element: <BillingAddPage /> },
-        { path: 'user/add', element: <UserAddPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'billing', element:  <ProtectedRoute><BillingPage /></ProtectedRoute> },
+        { path: 'billing/add', element: <ProtectedRoute><BillingAddPage /></ProtectedRoute> },
+        { path: 'user/add', element: <ProtectedRoute><UserAddPage /></ProtectedRoute> },
+        { path: 'blog', element: <ProtectedRoute><BlogPage /></ProtectedRoute> },
       ],
     },
     {
