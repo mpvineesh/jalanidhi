@@ -47,6 +47,15 @@ const billingService = {
             throw error;
         }
     },
+    updateBilling: async (id, billingData) => {
+        try {
+            const response = await api.post('/readings/'+id, billingData);
+            return response.data;
+        } catch (error) {
+            console.error("Error updating billing:", error);
+            throw error;
+        }
+    },
 
     // Fetch a specific billing by ID
     fetchBillingById: async (billingId) => {

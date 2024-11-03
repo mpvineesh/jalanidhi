@@ -88,13 +88,13 @@ export function BillingsView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={data.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    data.map((user) => user.id)
                   )
                 }
                 headLabel={[
@@ -134,7 +134,7 @@ export function BillingsView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={data.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}

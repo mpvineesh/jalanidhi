@@ -87,6 +87,10 @@ export function BillingTableRow({ row, selected, onSelectRow }: BillingTableRowP
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
+          <MenuItem onClick={handleClosePopover} sx={{ color: 'success.main' }}>
+            <Iconify icon="solar:check-circle-bold"  />
+            Paid
+          </MenuItem>
 
           <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />

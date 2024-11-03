@@ -56,6 +56,7 @@ export function Router() {
         {
           path: 'user', element: <ProtectedRoute><UserPage /></ProtectedRoute>,
         },
+        { path: 'user/edit/:id', element: <ProtectedRoute><UserAddPage /></ProtectedRoute> },
         {
           path: 'billing', element: <ProtectedRoute><BillingPage /></ProtectedRoute>, children: [{
             path: 'aad', element: <ProtectedRoute><BillingAddPage /></ProtectedRoute>,

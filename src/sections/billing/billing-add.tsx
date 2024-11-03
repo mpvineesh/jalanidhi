@@ -9,6 +9,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { useRouter } from 'src/routes/hooks';
 import { LoadingButton } from '@mui/lab';
 import axios from "axios";
 import billingService from '../../services/billing';
@@ -20,14 +21,19 @@ import { User } from '../../types/user';
 
 export function BillingAddView() {
 
+  const router = useRouter();
   const [month, setMonth] = useState('');
   const [reading, setReading] = useState('');
   const [user, setUser] = useState('');
   const [users, setUsers] = useState<User[]>([]); 
   const [mobile, setMobile] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+  const [mode, setMode] = useState('add');
+  const [billingId, setBillingId] = useState('');
 
   async function handleSubmit(event: { preventDefault: () => void; }) {
     event.preventDefault();
+    setIsLoading(true);
     // You should see email and password in console.
     // ..code to submit form to backend here...
     const data = {
@@ -36,10 +42,17 @@ export function BillingAddView() {
       month
     }
     try {
-      await billingService.createBilling(data);
-      alert('Data created successfully!');
+      if(mode =='add') {
+        await billingService.createBilling(data);
+      }else {
+        await billingService.updateBilling(billingId, data);
+      }
+      
+      router.push('/billing');
+      setIsLoading(false);
       // Optionally, fetch and update the displayed data
     } catch (error) {
+      setIsLoading(false);
       console.error('Error creating data:', error);
     }
 
@@ -123,6 +136,7 @@ export function BillingAddView() {
                 type="submit"
                 color="inherit"
                 variant="contained"
+                loading={isLoading}
               >
                 Submit
               </LoadingButton>

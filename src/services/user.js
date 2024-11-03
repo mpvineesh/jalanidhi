@@ -48,6 +48,16 @@ const userService = {
         }
     },
 
+    updateUser: async (id, userData) => {
+        try {
+            const response = await api.put('/users/'+id, userData);
+            return response.data;
+        } catch (error) {
+            console.error("Error updating user:", error);
+            throw error;
+        }
+    },
+
     // Fetch a specific user by ID
     fetchUserById: async (userId) => {
         try {

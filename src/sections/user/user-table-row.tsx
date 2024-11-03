@@ -9,7 +9,7 @@ import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
+import { useRouter } from 'src/routes/hooks';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { User } from '../../types/user';
@@ -23,12 +23,20 @@ type UserTableRowProps = {
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-
+  const router = useRouter();
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
   }, []);
 
-  const handleClosePopover = useCallback(() => {
+  const handleClosePopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(event.target)
+    setOpenPopover(null);
+  }, []);
+
+
+  const handleEditAction = useCallback((data) => {
+    //console.log('dddd', data)
+    router.push(`/user/edit/${data.id}`);
     setOpenPopover(null);
   }, []);
 
@@ -53,7 +61,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
        
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.status !== 'Active' && 'error') || 'success'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -86,7 +94,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={()=>handleEditAction(row)}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
