@@ -25,6 +25,7 @@ export function SignInView() {
   const auth = useAuth();
   useEffect(() => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('loggedUser');
   }, [])
   const handleSignIn = useCallback(async () => {
 
