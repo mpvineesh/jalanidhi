@@ -65,7 +65,6 @@ export function UserView() {
         <Button
           variant="contained"
           color="inherit"
-          href="/user/add"
           onClick={navigateToAdd}
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
